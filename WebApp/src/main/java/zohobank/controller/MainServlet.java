@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import zohobank.model.AccountDetails;
 import zohobank.model.CustomException;
@@ -13,6 +16,8 @@ import zohobank.model.CustomerDetails;
 import zohobank.model.DatabaseManagement;
 import zohobank.model.Helper;
 import zohobank.model.Persistence;
+import zohobank.model.TransactionDetails;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +32,7 @@ public class MainServlet extends HttpServlet {
 	private  Persistence persist=new DatabaseManagement(); 
     private CustomerDetails cusInfo=new CustomerDetails();
     private AccountDetails accInfo=new AccountDetails();
-    private Helper helper=new Helper();
+    private Helper helper=Helper.OBJECT;
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		doPost(request,response);
@@ -67,6 +72,18 @@ public class MainServlet extends HttpServlet {
 			RequestDispatcher toJsp=request.getRequestDispatcher("view/Transaction.jsp");
 			toJsp.forward(request, response);
 		}
+		else if(key.equalsIgnoreCase("Main")) {
+			RequestDispatcher toJsp=request.getRequestDispatcher("view/Homepage.jsp");
+			toJsp.forward(request, response);
+		}
+		else if(key.equalsIgnoreCase("withdraw")) {
+			RequestDispatcher toJsp=request.getRequestDispatcher("view/Withdraw.jsp");
+			toJsp.forward(request, response);
+		}
+		else if(key.equalsIgnoreCase("Deposit")) {
+			RequestDispatcher toJsp=request.getRequestDispatcher("view/Deposit.jsp");
+			toJsp.forward(request, response);
+		}
 		
 		else if(key.equalsIgnoreCase("AddAccount")) {
 			RequestDispatcher toJsp=request.getRequestDispatcher("view/Account.jsp");
@@ -94,16 +111,101 @@ public class MainServlet extends HttpServlet {
 			details.add(innerArrayList);
 			
 			try {
-				helper.checkPoint(details);
+				HashMap<String, String> successAndFailure = helper.checkPoint(details);
+				for (Map.Entry entry : successAndFailure.entrySet()) {
+					System.out.println(entry.getValue() + " == " + entry.getKey());
+				}
+				System.out.println();
 			} catch (CustomException e) {
-				System.out.println("Error in add customer details in servlet");
+				System.out.println("Error in adding customer details in servlet");
 			}
+			out.println(cusInfo);
 			out.println("Customer details added successfully");
+		}
+		else if(key.equals("DeleteCustomer")) {
+			String[] allCustomerId=request.getParameterValues("customerId");
+			
+			for(int i=0;i<allCustomerId.length;i++) {
+				int customerId=Integer.parseInt(allCustomerId[i]);
+				try {
+					
+					String output=helper.updateAllAccounts(customerId);
+					out.println(output);
+					
+				} catch (CustomException e) {
+					e.printStackTrace();
+			
+				}
+		}
+		}
+		else if(key.equals("DeleteAccount")) {
+			String[] allAccount=request.getParameterValues("account");
+	
+			for(int i=0;i<allAccount.length;i++) {
+				String[] particularAccount=allAccount[i].split(",");
+				int customerId=Integer.parseInt(particularAccount[0]);
+				long accountNo=Long.parseLong(particularAccount[1]);
+				try {
+					String output=helper.updateAccount(customerId, accountNo);
+					out.println(output);
+					
+				} catch (CustomException e) {
+					e.printStackTrace();
+			
+				}
+		}
+		}
+		else if(key.equalsIgnoreCase("submitAccount")) {
+			int customerId=Integer.parseInt(request.getParameter("customerId"));
+			String branch=(String) request.getParameter("branch");
+			BigDecimal balance = BigDecimal.valueOf(Double.parseDouble(request.getParameter("balance")));
+			accInfo.setBranch(branch);
+			accInfo.setBalance(balance);
+			accInfo.setCustomerId(customerId);
+			try {
+				String output=helper.insertNewAccountDetails(accInfo);
+				out.println(output);
+			} catch (CustomException e) {
+				out.println("Error in adding account details in servlet");
+			}
+		}
+		else if(key.equalsIgnoreCase("withdrawSubmit")) {
+			TransactionDetails transDetails = new TransactionDetails();
+			int customerId=Integer.parseInt(request.getParameter("customerId"));
+			long accountNo=Long.parseLong(request.getParameter("accountNo"));
+			String type=(String) request.getParameter("check");
+			BigDecimal balance = BigDecimal.valueOf(Double.parseDouble(request.getParameter("balance")));
+			transDetails.setAccountNumber(accountNo);
+			transDetails.setCustomerId(customerId);
+			transDetails.setTransactionAmount(balance);
+			transDetails.setTransactionType(type);
+			try {
+				String output=helper.withdrawal(transDetails);
+				out.println(output);
+			} catch (CustomException e) {
+				out.println("Error in adding account details in servlet");
+			}
+		}
+		else if(key.equalsIgnoreCase("depositSubmit")) {
+			TransactionDetails transDetails = new TransactionDetails();
+			int customerId=Integer.parseInt(request.getParameter("customerId"));
+			long accountNo=Long.parseLong(request.getParameter("accountNo"));
+			String type=(String) request.getParameter("check");
+			BigDecimal balance = BigDecimal.valueOf(Double.parseDouble(request.getParameter("balance")));
+			transDetails.setAccountNumber(accountNo);
+			transDetails.setCustomerId(customerId);
+			transDetails.setTransactionAmount(balance);
+			transDetails.setTransactionType(type);
+			try {
+				String output=helper.deposit(transDetails);
+				out.println(output);
+			} catch (CustomException e) {
+				out.println("Error in adding account details in servlet");
+			}
 		}
 		else  {
 			out.println("No jsp file found");
 		}
-		
 		
 	}
 

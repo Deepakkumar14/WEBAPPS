@@ -4,7 +4,7 @@ import java.util.*;
 
 public class BalanceChecking {
 	private static final Scanner input=new Scanner(System.in);
-	private static final Helper helper=new Helper();
+	private static final Helper helper=Helper.OBJECT;
 
 	public static void main(String[] args) {
 		BalanceChecking balanceChecking= new BalanceChecking();

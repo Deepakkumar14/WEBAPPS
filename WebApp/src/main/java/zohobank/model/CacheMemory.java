@@ -44,6 +44,8 @@ public enum CacheMemory {
         return true;
     }
     public boolean deleteAccount(int id,long accNum){
+    	System.out.println(accNum);
+        
         HashMap<Long,AccountDetails> account=accountMap.get(id);
         account.remove(accNum);
         return true;
@@ -62,6 +64,7 @@ public enum CacheMemory {
         HashMap<Long,AccountDetails> account=accountMap.get(transDetails.getCustomerId());
         AccountDetails accInfo  =account.get(transDetails.getAccountNumber());
         accInfo.setBalance(total);
+        
     }
 
 

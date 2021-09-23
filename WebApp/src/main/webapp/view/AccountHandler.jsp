@@ -21,6 +21,9 @@
    
  line-height:50px;
 }
+body{
+        	background-color:#98FB98;
+        	}
 .button{
  margin:20 30px;
   width: 250px;;
@@ -35,8 +38,10 @@
 	
 	
 </head> 
-<body>  
-  <h1 style="text-align:center">Account Registration</h1> 
+<body> 
+<form action="Main" method="post"> 
+<input type="hidden" name="key" value="DeleteAccount"> 
+  <h1 style="text-align:center">Account Gallery</h1> 
   <table Border='1' cellSpacing='10px' cellpadding='10px' class='center'>
             <thead>
                 <tr>
@@ -50,7 +55,7 @@
             <tbody>
                 <c:forEach items="${accountList}" var="accountList">
                 <tr>
-               <td> <input type="checkbox"> </td>
+               <td> <input type="checkbox" name="account" value="${accountList.customerId},${accountList.accountNumber}"> </td>
 					<td><c:out value="${accountList.customerId}" /></td>
                    <td><c:out value="${accountList.accountNumber}" /></td>
                     <td><c:out value="${accountList.branch}" /></td>
@@ -60,15 +65,16 @@
             </tbody>
         </table>
  
-<input type="button" value="Go back!" onclick="history.back()"></input>
+
 
 <div class="wrapper">
 <a href="Main?key=AddAccount">
   <input type="button" value="ADD" class="button"></input></a>
-  <input type="button" value="DELETE" class="button">
+  <input type="submit" value="DELETE" class="button">
+  <input type="button" value="Go back!" onclick="history.back()" class="button"></input>
  
 </div>
-
+</form>
      
 </body>  
 </html>  

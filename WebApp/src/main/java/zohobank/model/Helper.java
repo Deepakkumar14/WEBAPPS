@@ -9,8 +9,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
-public class Helper{
+public enum Helper{
+	OBJECT;
 
+	Helper(){
+		try {
+			callingDatabaseForCustomer();
+			callingDatabaseForAccount();
+			setAllCustomerMap();
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+		}
+	}
     private Persistence persistence=new DatabaseManagement();
 //    public void objectCreation() {
 //        try {
@@ -146,6 +156,10 @@ public class Helper{
     }
     //---------------------------------------------------------------------------------------------
     public String insertNewAccountDetails(AccountDetails accDetails) throws CustomException {
+    	String output = retrieveBooleanValue(accDetails.getCustomerId());
+		if (output.equals("true")) {
+    	String output1 = retrieveAccountBooleanValue(accDetails.getCustomerId(),accDetails.getAccountNumber());
+		if (output.equals("true")) {
         ArrayList<Object> successRate= persistence.insertAccountInfoToTable(accDetails);
         if((Integer)successRate.get(0)>0) {
             accDetails.setAccountNumber((Long)successRate.get(1));
@@ -155,6 +169,10 @@ public class Helper{
         else{
             return "Account is not added" +"\t"+ accDetails;
         }
+		}
+		return output1;
+		}
+		return output;
     }
     //---------------------------------------------------------------------------------------------
     public String updateAllAccounts(int id) throws CustomException {
@@ -170,6 +188,7 @@ public class Helper{
     }
     //---------------------------------------------------------------------------------------------
     public String updateAccount(int id, long accNum) throws CustomException {
+    
         int condition = persistence.deactivateAccount(accNum);
         if(condition>0) {
                 CacheMemory.INSTANCE.deleteAccount(id,accNum);
@@ -189,6 +208,10 @@ public class Helper{
     }
     //---------------------------------------------------------------------------------------------
     public String withdrawal(TransactionDetails transDetails) throws CustomException {
+    	String output = retrieveBooleanValue(transDetails.getCustomerId());
+		if (output.equals("true")) {
+    	String output1 = retrieveAccountBooleanValue(transDetails.getCustomerId(),transDetails.getAccountNumber());
+		if (output.equals("true")) {
         BigDecimal balance=getBalance(transDetails);
         BigDecimal withdrawalAmount=transDetails.getTransactionAmount();
         int comparedValue=balance.compareTo(withdrawalAmount);
@@ -200,7 +223,7 @@ public class Helper{
               boolean bool1= persistence.updateBalance(transDetails,total);
               if(bool1) {
                   CacheMemory.INSTANCE.updateBalance(transDetails, total);
-                  return "************** Withdrawal of " + withdrawalAmount + " is successful **************";
+                  return "************** Withdrawal of " + withdrawalAmount + " is successful **************"+"\n"+"*******Balance is  " + total + "******";
               }else
                   return "Server Error !!Try again later";
            }
@@ -209,9 +232,17 @@ public class Helper{
         }
         else
             return "Insufficient balance";
+		}
+		return output1;
+		}
+		return output;
     }
     //---------------------------------------------------------------------------------------------
     public String deposit(TransactionDetails transDetails) throws CustomException {
+    	String output = retrieveBooleanValue(transDetails.getCustomerId());
+		if (output.equals("true")) {
+    	String output1 = retrieveAccountBooleanValue(transDetails.getCustomerId(),transDetails.getAccountNumber());
+		if (output.equals("true")) {
         BigDecimal balance=getBalance(transDetails);
         BigDecimal depositAmount=transDetails.getTransactionAmount();
         BigDecimal total=balance.add(depositAmount);
@@ -221,13 +252,17 @@ public class Helper{
                 boolean bool1= persistence.updateBalance(transDetails,total);
                 if(bool1) {
                     CacheMemory.INSTANCE.updateBalance(transDetails, total);
-                    return "************ Deposit of " + depositAmount + " is successful ***************";
+                    return "************ Deposit of " + depositAmount + " is successful ***************"+"\n"+"*******Balance is  " + total + "******";
                 } else
                     return "Server Error !!Try again later";
             }
             else{
                 return "Server Error !!Try again later";
             }
+		}
+		return output1;
+		}
+		return output;
         }
     //---------------------------------------------------------------------------------------------
     public BigDecimal getBalance(TransactionDetails transDetails){

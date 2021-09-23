@@ -2,38 +2,62 @@
 <head>  
     <title>Welcome page</title>  
 <style>
-.center {
+	table{
+	border-collapse: collapse;
+	}
+	.center {
   margin-left: auto;
   margin-right: auto;
-}</style>
-
+}
+.wrapper{
+  
+ text-align: center;
+   margin-left:-20px;
+    margin-right:-20px;
+   
+ line-height:50px;
+  }
+  body{
+        	background-color:#98FB98;
+        	}
+.button{
+ margin:20 30px;
+  width: 250px;;
+ padding: 14px 40px;
+  font-size: 20px;
+  display:inline-block;
+  }
+     .button a{
+     text-decoration:none;
+     }
+	</style>
 </head> 
 <body>  
 <form action="Main" method="post"> 
 <input type="hidden" name="key" value="submitCustomer">
-   <h1 style="text-align:center">Customer Registration</h1>
-<table cellSpacing='10px' class="center">
+   <h1 style="text-align:center"><font size = 5 >Customer Registration</h1>
+<table  cellpadding=10px class="center">
   <tr>
-  <td><label for="customerName">Name: </label></td>
-  <td><input type="text" name="customerName"/></td>
+  <td><label for="customerName"><font size = 5 >Name: </label></font></td>
+  <td><textarea row="2" col="5" name="customerName"/></textarea></td>
 </tr>
 <tr>
-<td><label for="city">City: </label></td>
-<td><input type="text" name="city"/></td>
+<td><label for="city"><font size = 5 >City: </label></font></td>
+<td><textarea row="2" col="5" name="city"/></textarea></td>
 </tr>
 <tr>
-  <td><label for="branch">Branch: </label></td>
-  <td><input type="text" name="branch"/></td>
+  <td><label for="branch"><font size = 5 >Branch: </label></font></td>
+  <td><textarea row="2" col="5" name="branch"/></textarea></td>
 </tr>
 <tr>
-  <td><label for="balance">Balance: </label></td>
-  <td><input type="text" name="balance"/></td>
+  <td><label for="balance"><font size = 5 >Balance: </label></font></td>
+  <td><textarea row="2" col="5" name="balance"/></textarea></td>
 </tr>
 </table>
 
-<input type="submit" value="submit"/></input>
- <input type="button" value="Go back!" onclick="history.back()">
-
+<div class="wrapper">
+<input type="submit" value="submit"class="button"></input>
+ <input type="button" value="Go back!" onclick="history.back()"class="button">
   
 </form>  
 </body>  
