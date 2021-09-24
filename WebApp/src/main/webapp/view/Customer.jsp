@@ -22,7 +22,7 @@
         	}
 .button{
  margin:20 30px;
-  width: 250px;;
+  width: 150px;;
  padding: 14px 40px;
   font-size: 20px;
   display:inline-block;
@@ -39,19 +39,19 @@
 <table  cellpadding=10px class="center">
   <tr>
   <td><label for="customerName"><font size = 5 >Name: </label></font></td>
-  <td><textarea row="2" col="5" name="customerName"/></textarea></td>
+  <td><input type="text"  name="customerName"/></textarea></td>
 </tr>
 <tr>
 <td><label for="city"><font size = 5 >City: </label></font></td>
-<td><textarea row="2" col="5" name="city"/></textarea></td>
+<td><input type="text" name="city"/></textarea></td>
 </tr>
 <tr>
   <td><label for="branch"><font size = 5 >Branch: </label></font></td>
-  <td><textarea row="2" col="5" name="branch"/></textarea></td>
+  <td><input type="text" name="branch"/></textarea></td>
 </tr>
 <tr>
   <td><label for="balance"><font size = 5 >Balance: </label></font></td>
-  <td><textarea row="2" col="5" name="balance"/></textarea></td>
+  <td><input type="text" name="balance"/></textarea></td>
 </tr>
 </table>
 

@@ -22,7 +22,7 @@
         	}
 .button{
  margin:20 30px;
-  width: 250px;;
+  width: 150px;;
  padding: 14px 40px;
   font-size: 20px;
   display:inline-block;
@@ -40,15 +40,15 @@
 <table cellpadding=10px  class="center">
   <tr>
   <td><font size = 5 ><label for="customerId">Customer Id: </label></font></td>
-  <td><textarea row="2" col="5"  name="customerId"/></textarea></td>
+  <td><input type="text" name="customerId"/></textarea></td>
 </tr>
 <tr>
   <td><label for="branch"><font size = 5 >Branch: </label></font></td>
-  <td><textarea row="2" col="5" name="branch"/></textarea></td>
+  <td><input type="text" name="branch"/></textarea></td>
 </tr>
 <tr>
   <td><label for="balance"><font size = 5 >Balance: </label></font></td>
-  <td><textarea row="2" col="5" name="balance"/></textarea></td>
+  <td><input type="text" name="balance"/></textarea></td>
 </tr>
 </table>
 

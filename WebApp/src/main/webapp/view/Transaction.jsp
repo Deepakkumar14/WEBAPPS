@@ -19,7 +19,7 @@
 }
 .button{
  margin:20 30px;
-  width: 250px;;
+  width: 250px;
  padding: 14px 40px;
   font-size: 20px;
   display:inline-block;
@@ -45,7 +45,7 @@ body{
   <input type="button" value="WITHDRAW" class="button"></input></a>
   <a href="Main?key=Deposit">
   <input type="button" value="DEPOSIT"class="button"> </a><br>
-   <input type="button" value="Go back!" onclick="history.back()">
+   <input type="button" value="Go back!" onclick="history.back()" class="button">
   
 </form>  
 </body>  

@@ -26,7 +26,7 @@ body{
         	}
 .button{
  margin:20 30px;
-  width: 250px;;
+  width: 150px;;
  padding: 14px 40px;
   font-size: 20px;
   display:inline-block;
